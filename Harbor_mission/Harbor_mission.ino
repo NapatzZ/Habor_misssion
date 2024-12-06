@@ -5,6 +5,7 @@
 #define S2 A2
 #define S3 A3
 #define numsensorsF 8
+
 #define DEBUG_MODE 0 
 
 int _MaxF[numsensorsF] = { 980 , 980 , 981 ,	978 ,	982 ,	981 ,	980 ,	984 };
@@ -14,8 +15,12 @@ int last_value = 0;
 ADS7828 adc;
 
 void Motors(int m1, int m2) {
-  motor(1, m1);
-  motor(2, m2);
+  #if DEBUG_MODE 
+    glcd(0,0,"  %d  , %d  ",m1,m2);
+  #else 
+    motor(1, m1);
+    motor(2, m2);
+  #endif
 }
 
 void ReadFornt() {
