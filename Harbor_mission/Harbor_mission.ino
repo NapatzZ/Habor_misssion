@@ -1,14 +1,17 @@
 #include <popx2.h>
+#include <ADS7828.h>
 #define S0 A0
 #define S1 A1
 #define S2 A2
 #define S3 A3
 #define numsensorsF 8
+#define DEBUG_MODE 0 
 
 int _MaxF[numsensorsF] = { 980 , 980 , 981 ,	978 ,	982 ,	981 ,	980 ,	984 };
 int _MinF[numsensorsF] = { 330 ,	331 ,	540 ,	355 ,	516 ,	543 ,	443 ,	804	 };
 int sensor_values[numsensorsF];
 int last_value = 0;
+ADS7828 adc;
 
 void Motors(int m1, int m2) {
   motor(1, m1);
@@ -100,9 +103,12 @@ void PID(int BaseSpeed, float Kp, float Ki, float Kd) {
   }
 }
 
-void 
+
 
 void setup() {
+  Wire.begin();
+  Wire.setClock(1000000L);
+  adc.begin(0);
   Serial.begin(9600);
   OK();
   motor(100,50);
